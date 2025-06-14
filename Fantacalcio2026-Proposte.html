@@ -30,37 +30,45 @@
       box-sizing: border-box;
     }
 
-    .countdown {
-      font-size: 3.5em; /* Slightly larger for impact */
+    .countdown, .message-container { /* Apply shared styles to both */
       margin-bottom: 20px;
       background: rgba(0, 0, 0, 0.7); /* Darker background for digital feel */
       padding: 20px;
       border-radius: 15px;
-      color: #00ff00; /* Bright green for digital numbers */
+      color: #00ff00; /* Bright green for digital numbers/text */
       font-family: 'Alarm Clock', 'DSEG7Classic-Bold', 'Press Start 2P', monospace; /* Prioritize alarm clock fonts */
       text-shadow: 0 0 15px rgba(0, 255, 0, 0.9), 0 0 25px rgba(0, 255, 0, 0.5); /* Stronger glow */
-      letter-spacing: 2px; /* Spacing for digital look */
+      letter-spacing: 1px; /* Slightly reduced for message readability */
+    }
+
+    .countdown {
+      font-size: 3.5em; /* Larger for countdown */
+      letter-spacing: 2px; /* Wider for countdown */
     }
 
     .countdown span {
-      display: inline-block; /* Helps with spacing if needed */
-      min-width: 0.8em; /* Ensures consistent width for single digits */
+      display: inline-block;
+      min-width: 0.8em;
     }
 
     .message-container {
-      background: rgba(200, 255, 200, 0);
-      padding: 20px;
-      max-width: 700px;
-      border-radius: 15px;
       font-size: 1.2em;
       line-height: 1.6em;
-      color: #000;
+      max-width: 700px;
       overflow: hidden;
       white-space: pre-wrap;
       box-sizing: border-box;
       text-align: justify;
     }
 
+    /* Override default link styles within the digital message */
+    .message-container a {
+      color: #00ff00; /* Keep link color consistent with digital theme */
+      text-decoration: underline; /* Optional: keep underline for clarity */
+      text-shadow: none; /* Remove glow from underline */
+    }
+
+    /* Styles for the "typing" effect characters */
     .message-text {
       display: inline-block;
       opacity: 0;
@@ -93,7 +101,7 @@
         font-style: normal;
     }
     /* --- Optional: Embed another alarm clock style font (example) --- */
-    /* You would need to download and include a font file like 'Alarm Clock.ttf' */
+    /* You would need to download and include a font file like 'Alarm_Clock.ttf' */
     /*
     @font-face {
         font-family: 'Alarm Clock';
