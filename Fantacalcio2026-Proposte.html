@@ -31,14 +31,20 @@
     }
 
     .countdown {
-      font-size: 3em;
+      font-size: 3.5em; /* Slightly larger for impact */
       margin-bottom: 20px;
-      background: rgba(200, 255, 200, 0.8);
+      background: rgba(0, 0, 0, 0.7); /* Darker background for digital feel */
       padding: 20px;
       border-radius: 15px;
-      color: #000;
-      font-family: 'DSEG7Classic-Bold', 'Press Start 2P', monospace; /* Digital font fallback */
-      text-shadow: 0 0 10px rgba(0, 255, 0, 0.7); /* Glow effect */
+      color: #00ff00; /* Bright green for digital numbers */
+      font-family: 'Alarm Clock', 'DSEG7Classic-Bold', 'Press Start 2P', monospace; /* Prioritize alarm clock fonts */
+      text-shadow: 0 0 15px rgba(0, 255, 0, 0.9), 0 0 25px rgba(0, 255, 0, 0.5); /* Stronger glow */
+      letter-spacing: 2px; /* Spacing for digital look */
+    }
+
+    .countdown span {
+      display: inline-block; /* Helps with spacing if needed */
+      min-width: 0.8em; /* Ensures consistent width for single digits */
     }
 
     .message-container {
@@ -52,13 +58,18 @@
       overflow: hidden;
       white-space: pre-wrap;
       box-sizing: border-box;
-      text-align: justify; /* Justify text */
+      text-align: justify;
     }
 
     .message-text {
       display: inline-block;
       opacity: 0;
       animation: fadeIn 0.1s forwards;
+    }
+
+    /* Prevent email address from breaking */
+    .no-wrap {
+      white-space: nowrap;
     }
 
     @keyframes typing {
@@ -81,10 +92,20 @@
         font-weight: normal;
         font-style: normal;
     }
+    /* --- Optional: Embed another alarm clock style font (example) --- */
+    /* You would need to download and include a font file like 'Alarm Clock.ttf' */
+    /*
+    @font-face {
+        font-family: 'Alarm Clock';
+        src: url('Alarm_Clock.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+    */
 
     @media (max-width: 768px) {
       .countdown {
-        font-size: 2em;
+        font-size: 2.5em;
         padding: 15px;
       }
 
@@ -120,7 +141,10 @@
       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      countdown.innerHTML = `${days}g ${hours}h ${minutes}m ${seconds}s`;
+      // Pad numbers with leading zeros if less than 10
+      const formatTime = (value) => String(value).padStart(2, '0');
+
+      countdown.innerHTML = `${days}<span style="font-size:0.5em;">g</span> ${formatTime(hours)}<span style="font-size:0.5em;">h</span> ${formatTime(minutes)}<span style="font-size:0.5em;">m</span> ${formatTime(seconds)}<span style="font-size:0.5em;">s</span>`;
     }
 
     setInterval(updateCountdown, 1000);
@@ -129,7 +153,7 @@
     const messageContainer = document.getElementById('messageContainer');
     const fullMessage = `
 <p><strong>Buongiorno,</strong></p>
-<p>si ricorda che fino alle <strong>23:59:59.999 del 15 GIUGNO</strong> potete inviare al presidente di lega B i vostri suggerimenti per e-mail a <strong>presidente.legaldf@gmail.com</strong> (modalità preferibile) o direttamente su whatsapp (sempre in privato). L’importante è che siano per iscritto.</p>
+<p>si ricorda che fino alle <strong>23:59:59.999 del 15 GIUGNO</strong> potete inviare al presidente di lega B i vostri suggerimenti per e-mail a <a href="mailto:presidente.legaldf@gmail.com"><span class="no-wrap">presidente.legaldf@gmail.com</span></a> (modalità preferibile) o direttamente su whatsapp (sempre in privato). L’importante è che siano per iscritto.</p>
 <p>Cordiali Saluti,<br><strong>Presidente LdF Lega A</strong></p>
     `;
     let charIndex = 0;
