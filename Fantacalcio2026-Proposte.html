@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Countdown Fantacalcio 2025/26</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: url('Logo2026.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: Arial, sans-serif;
+      color: white;
+      text-shadow: 2px 2px 4px #000;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+    }
+
+    .countdown {
+      font-size: 3em;
+      margin-bottom: 20px;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 20px;
+      border-radius: 15px;
+    }
+
+    .message {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 20px;
+      max-width: 700px;
+      border-radius: 15px;
+      font-size: 1.2em;
+      line-height: 1.6em;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="countdown" id="countdown"></div>
+
+  <div class="message">
+    <p><strong>Buongiorno,</strong></p>
+    <p>si ricorda che fino alle <strong>23:59:59.999 del 15 GIUGNO</strong> potete inviare al presidente di lega B i vostri suggerimenti per e-mail a <strong>presidente.legaldf@gmail.com</strong> (modalità preferibile) o direttamente su whatsapp (sempre in privato). L’importante è che siano per iscritto.</p>
+    <p>Cordiali Saluti,<br><strong>Presidente LdF Lega A</strong></p>
+  </div>
+
+  <script>
+    const countdown = document.getElementById('countdown');
+    const deadline = new Date('2025-06-15T23:59:59.999').getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = deadline - now;
+
+      if (distance <= 0) {
+        countdown.innerHTML = "Tempo scaduto!";
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      countdown.innerHTML = `${days}g ${hours}h ${minutes}m ${seconds}s`;
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+  </script>
+
+</body>
+</html>
