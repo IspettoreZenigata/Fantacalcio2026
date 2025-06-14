@@ -39,14 +39,35 @@
       color: #000;
     }
 
-    .message {
-      background: rgba(200, 255, 200, 0.8); /* verde chiaro e trasparente */
+    .message-container {
+      background: rgba(200, 255, 200, 0); /* completamente trasparente */
       padding: 20px;
       max-width: 700px;
       border-radius: 15px;
       font-size: 1.2em;
       line-height: 1.6em;
       color: #000;
+      overflow: hidden; /* important for typewriter effect */
+      white-space: pre-wrap; /* preserves whitespace and allows wrapping */
+      box-sizing: border-box;
+    }
+
+    .message-text {
+      display: inline-block; /* allows fade-in of individual characters */
+      opacity: 0;
+      animation: fadeIn 0.1s forwards; /* initial fade-in for each char */
+    }
+
+    /* Keyframe animation for typing effect (simulating dissolution) */
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+
+    /* Keyframe animation for fade in */
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
     }
 
     @media (max-width: 768px) {
@@ -55,7 +76,7 @@
         padding: 15px;
       }
 
-      .message {
+      .message-container {
         font-size: 1em;
         padding: 15px;
       }
@@ -66,11 +87,8 @@
 
   <div class="countdown" id="countdown"></div>
 
-  <div class="message">
-    <p><strong>Buongiorno,</strong></p>
-    <p>si ricorda che fino alle <strong>23:59:59.999 del 15 GIUGNO</strong> potete inviare al presidente di lega B i vostri suggerimenti per e-mail a <strong>presidente.legaldf@gmail.com</strong> (modalità preferibile) o direttamente su whatsapp (sempre in privato). L’importante è che siano per iscritto.</p>
-    <p>Cordiali Saluti,<br><strong>Presidente LdF Lega A</strong></p>
-  </div>
+  <div class="message-container" id="messageContainer">
+    </div>
 
   <script>
     const countdown = document.getElementById('countdown');
@@ -95,6 +113,45 @@
 
     setInterval(updateCountdown, 1000);
     updateCountdown();
+
+    // Typewriter effect for the message
+    const messageContainer = document.getElementById('messageContainer');
+    const fullMessage = `
+<p><strong>Buongiorno,</strong></p>
+<p>si ricorda che fino alle <strong>23:59:59.999 del 15 GIUGNO</strong> potete inviare al presidente di lega B i vostri suggerimenti per e-mail a <strong>presidente.legaldf@gmail.com</strong> (modalità preferibile) o direttamente su whatsapp (sempre in privato). L’importante è che siano per iscritto.</p>
+<p>Cordiali Saluti,<br><strong>Presidente LdF Lega A</strong></p>
+    `;
+    let charIndex = 0;
+    let typedMessageHTML = '';
+
+    function typeWriter() {
+      if (charIndex < fullMessage.length) {
+        const char = fullMessage.charAt(charIndex);
+        if (char === '<') { // Handle HTML tags
+          const endIndex = fullMessage.indexOf('>', charIndex);
+          if (endIndex !== -1) {
+            typedMessageHTML += fullMessage.substring(charIndex, endIndex + 1);
+            charIndex = endIndex + 1;
+          } else {
+            typedMessageHTML += char; // Fallback if tag is malformed
+            charIndex++;
+          }
+        } else {
+          typedMessageHTML += `<span class="message-text">${char}</span>`;
+          charIndex++;
+        }
+        messageContainer.innerHTML = typedMessageHTML;
+
+        // Apply animation to the newly added span
+        const lastSpan = messageContainer.lastElementChild;
+        if (lastSpan && lastSpan.classList.contains('message-text')) {
+            lastSpan.style.animationDelay = `${charIndex * 0.01}s`; // Adjust delay for typing speed
+        }
+        setTimeout(typeWriter, 10); // Adjust typing speed here (milliseconds)
+      }
+    }
+
+    typeWriter(); // Start the typewriter effect
   </script>
 
 </body>
