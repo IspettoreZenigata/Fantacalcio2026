@@ -2,23 +2,30 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8">
-  <title>Fantacalcio Proposte 2025/26</title>
+  <title>Countdown Fantacalcio 2025/26</title>
   <style>
-    body {
+    html, body {
       margin: 0;
       padding: 0;
-      background: url('Logo2026.jpeg') center center no-repeat;
-      background-size: contain; /* Mostra l'intera immagine */
-      background-color: #000; /* Sfondo nero se l'immagine non copre tutto */
+      width: 100%;
+      min-height: 100%;
+      background: #000;
       font-family: Arial, sans-serif;
       color: white;
       text-shadow: 2px 2px 4px #000;
+    }
+
+    body {
+      background-image: url('Logo2026.jpeg');
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: contain;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
-      height: 100vh;
+      justify-content: center;
       text-align: center;
+      overflow: hidden;
     }
 
     .countdown {
@@ -36,6 +43,18 @@
       border-radius: 15px;
       font-size: 1.2em;
       line-height: 1.6em;
+    }
+
+    @media (max-width: 768px) {
+      .countdown {
+        font-size: 2em;
+        padding: 15px;
+      }
+
+      .message {
+        font-size: 1em;
+        padding: 15px;
+      }
     }
   </style>
 </head>
