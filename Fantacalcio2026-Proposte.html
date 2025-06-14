@@ -55,10 +55,10 @@
       font-size: 1.2em;
       line-height: 1.6em;
       max-width: 700px;
-      overflow: hidden;
-      white-space: pre-wrap;
+      /* Removed overflow: hidden and white-space: pre-wrap for standard wrapping */
       box-sizing: border-box;
       text-align: justify;
+      word-wrap: break-word; /* Allows long words to break if necessary */
     }
 
     /* Override default link styles within the digital message */
@@ -68,26 +68,9 @@
       text-shadow: none; /* Remove glow from underline */
     }
 
-    /* Styles for the "typing" effect characters */
-    .message-text {
-      display: inline-block;
-      opacity: 0;
-      animation: fadeIn 0.1s forwards;
-    }
-
-    /* Prevent email address from breaking */
+    /* Prevent specific elements (like email) from breaking across lines */
     .no-wrap {
       white-space: nowrap;
-    }
-
-    @keyframes typing {
-      from { width: 0 }
-      to { width: 100% }
-    }
-
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
     }
 
     /* --- Optional: Import Google Font for Digital Display (Press Start 2P) --- */
@@ -129,7 +112,10 @@
   <div class="countdown" id="countdown"></div>
 
   <div class="message-container" id="messageContainer">
-    </div>
+    <p><strong>Buongiorno,</strong></p>
+    <p>si ricorda che fino alle <strong>23:59:59.999 del 15 GIUGNO</strong> potete inviare al presidente di lega B i vostri suggerimenti per e-mail a <a href="mailto:presidente.legaldf@gmail.com"><span class="no-wrap">presidente.legaldf@gmail.com</span></a> (modalità preferibile) o direttamente su whatsapp (sempre in privato). L’importante è che siano per iscritto.</p>
+    <p>Cordiali Saluti,<br><strong>Presidente LdF Lega A</strong></p>
+  </div>
 
   <script>
     const countdown = document.getElementById('countdown');
@@ -158,42 +144,8 @@
     setInterval(updateCountdown, 1000);
     updateCountdown();
 
-    const messageContainer = document.getElementById('messageContainer');
-    const fullMessage = `
-<p><strong>Buongiorno,</strong></p>
-<p>si ricorda che fino alle <strong>23:59:59.999 del 15 GIUGNO</strong> potete inviare al presidente di lega B i vostri suggerimenti per e-mail a <a href="mailto:presidente.legaldf@gmail.com"><span class="no-wrap">presidente.legaldf@gmail.com</span></a> (modalità preferibile) o direttamente su whatsapp (sempre in privato). L’importante è che siano per iscritto.</p>
-<p>Cordiali Saluti,<br><strong>Presidente LdF Lega A</strong></p>
-    `;
-    let charIndex = 0;
-    let typedMessageHTML = '';
-
-    function typeWriter() {
-      if (charIndex < fullMessage.length) {
-        const char = fullMessage.charAt(charIndex);
-        if (char === '<') {
-          const endIndex = fullMessage.indexOf('>', charIndex);
-          if (endIndex !== -1) {
-            typedMessageHTML += fullMessage.substring(charIndex, endIndex + 1);
-            charIndex = endIndex + 1;
-          } else {
-            typedMessageHTML += char;
-            charIndex++;
-          }
-        } else {
-          typedMessageHTML += `<span class="message-text">${char}</span>`;
-          charIndex++;
-        }
-        messageContainer.innerHTML = typedMessageHTML;
-
-        const lastSpan = messageContainer.lastElementChild;
-        if (lastSpan && lastSpan.classList.contains('message-text')) {
-            lastSpan.style.animationDelay = `${charIndex * 0.01}s`;
-        }
-        setTimeout(typeWriter, 10);
-      }
-    }
-
-    typeWriter();
+    // Removed the typeWriter function and related variables as dissolve effect is removed.
+    // Message content is now directly in HTML.
   </script>
 
 </body>
